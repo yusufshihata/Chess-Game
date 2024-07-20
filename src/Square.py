@@ -15,8 +15,9 @@ class Square:
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, pygame.Rect(self.rect))
-        pygame.display.flip()
-
+    
+    
     def get_coordinates(self):
         files = 'abcdefgh'
         return files[self.x] + str(self.y)
+    
