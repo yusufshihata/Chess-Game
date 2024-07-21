@@ -10,11 +10,19 @@ class Main:
     
     def mainLoop(self):
         run = True
+        moving = False
         
         while run:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    moving = True
+                if event.type == pygame.MOUSEBUTTONUP:
+                    moving = False
+                
+                if event.type == pygame.MOUSEMOTION and moving:
+                    pass
             board = Board(self.screen)
             pygame.display.update()
         

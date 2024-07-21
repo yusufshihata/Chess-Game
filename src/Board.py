@@ -52,7 +52,7 @@ class Board:
     def show_pieces(self, surface):
         for row in range(8):
             for col in range(8):
-                if self.squares[row][col].occ_piece != None:
-                    img = pygame.image.load(self.squares[row][col].occ_piece.texture)
-                    imgcenter = col * SIZE + SIZE // 2, row * SIZE + SIZE // 2
-                    surface.blit(img, img.get_rect(center=imgcenter))
+                if self.squares[row][col].piece != None:
+                    img = self.squares[row][col].piece.texture
+                    imgcenter = self.squares[row][col].piece.texture_rect
+                    surface.blit(img, imgcenter)
