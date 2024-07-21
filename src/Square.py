@@ -16,8 +16,11 @@ class Square:
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, pygame.Rect(self.rect))
     
-    
+
     def get_coordinates(self):
         files = 'abcdefgh'
-        return files[self.x] + str(self.y)
+        return files[self.x] + str(8-self.y)
+
+    def occupyed(self):
+        return self.piece != None
     

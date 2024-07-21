@@ -10,7 +10,7 @@ import pygame
 
 
 class Board:
-    def __init__(self, surface):
+    def __init__(self, surface, dragged_square=None):
         self.config = [
             ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
             ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
@@ -24,6 +24,7 @@ class Board:
         self.squares = [[None for _ in range(8)] for _ in range(8)]
         self.turn = 'white'
         self.surface = surface
+        self.dragged_square = dragged_square
         self.configure()
         self.show_pieces(surface)
 
@@ -52,7 +53,11 @@ class Board:
     def show_pieces(self, surface):
         for row in range(8):
             for col in range(8):
-                if self.squares[row][col].piece != None:
-                    img = self.squares[row][col].piece.texture
-                    imgcenter = self.squares[row][col].piece.texture_rect
-                    surface.blit(img, imgcenter)
+                if self.squares[row][col].piece is not None:
+                    if self.dragged_square == None or (row != self.dragged_square.y or col != self.dragged_square.x):
+                        img = self.squares[row][col].piece.texture
+                        imgcenter = self.squares[row][col].piece.texture_rect
+                        surface.blit(img, imgcenter)
+    
+    def find_square(self,x,y):
+        return self.squares[y][x]
