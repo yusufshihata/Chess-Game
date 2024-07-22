@@ -61,3 +61,11 @@ class Board:
     
     def find_square(self,x,y):
         return self.squares[y][x]
+
+    def show_valid_moves(self, valid_moves,surface):
+        for i, valid_square in enumerate(valid_moves):
+            square = self.find_square(valid_square[1], valid_square[0])
+            if square.piece != None:
+                valid_moves.pop(i)
+            else:
+                pygame.draw.circle(surface, (100,100,100), (valid_square[1]*SIZE+SIZE//2, valid_square[0]*SIZE+SIZE//2), 20)

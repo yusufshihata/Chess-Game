@@ -32,13 +32,14 @@ class Main:
                         dragger.piece.x = dragger.mouseX
                         dragger.piece.y = dragger.mouseY
                         dragger.drag_piece()
-
+                        
                         
                 
                 if event.type == pygame.MOUSEBUTTONUP:
                     dragger.dragging = False
                     dragger.piece = None
                     self.dragged_square = None
+                    self.valid_moves = []
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     dragger.dragging = True
@@ -49,11 +50,16 @@ class Main:
 
                         self.dragged_square = board.find_square(dragger.mouseY//SIZE, dragger.mouseX//SIZE)
 
+                        dragger.valid_moves = dragger.piece.movement()
+
                 if event.type == pygame.QUIT:
                     run = False
 
             if dragger.piece != None:
                 dragger.blit_piece(self.screen)
+                board.show_valid_moves(dragger.valid_moves, self.screen)
+                print(dragger.valid_moves)
+                print(board.find_square(5, 0).piece.name)
 
             pygame.display.update()
         

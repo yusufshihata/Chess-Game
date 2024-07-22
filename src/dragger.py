@@ -9,6 +9,7 @@ class Dragger:
         self.mouseY = 0.0
         self.piece = None
         self.dragging = False
+        self.valid_moves = []
     
     def save_initial(self, pos):
         self.init_x, self.init_y = pos
