@@ -51,6 +51,7 @@ class Main:
                         self.dragged_square = board.find_square(dragger.mouseY//SIZE, dragger.mouseX//SIZE)
 
                         dragger.valid_moves = dragger.piece.movement()
+                        print(dragger.valid_moves)
 
                 if event.type == pygame.QUIT:
                     run = False
@@ -58,8 +59,6 @@ class Main:
             if dragger.piece != None:
                 dragger.blit_piece(self.screen)
                 board.show_valid_moves(dragger.valid_moves, self.screen)
-                print(dragger.valid_moves)
-                print(board.find_square(5, 0).piece.name)
 
             pygame.display.update()
         
