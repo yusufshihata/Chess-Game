@@ -6,7 +6,7 @@ class Pawn(piece.Piece):
         self.move_sequence = [[0,1], [0,-1]]
         self.has_moved = False
     
-    def movement(self):
+    def movement(self,board):
         valid_squares = []
         if self.has_moved:
             if self.color == 'w':

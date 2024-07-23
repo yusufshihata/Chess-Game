@@ -55,9 +55,4 @@ class Board:
 
     def show_valid_moves(self, valid_moves, dragged_piece,surface):
         for i, valid_square in enumerate(valid_moves):
-            square = self.find_square(valid_square[1], valid_square[0])
-            if square.piece != None:
-                if square.piece.color == dragged_piece.color:
-                    valid_moves.pop(i)
-            else:
-                pygame.draw.circle(surface, (100,100,100), (valid_square[1]*SIZE+SIZE//2, valid_square[0]*SIZE+SIZE//2), 20)
+            pygame.draw.circle(surface, (100,100,100), (valid_square[1]*SIZE+SIZE//2, valid_square[0]*SIZE+SIZE//2), 20)

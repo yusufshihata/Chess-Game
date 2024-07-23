@@ -5,15 +5,18 @@ class Rook(Piece):
         self.texture = super().get_texture()
         self.move_sequence = [[1,0], [0,1], [-1, 0], [0,-1]]
     
-    def movement(self):
+    def movement(self,board):
         valid_squares = []
         for move in self.move_sequence:
-            for i in range(0,8):
-                if move[0] == 0:
-                    if self.y + (move[1]*i) < 8 and self.y + (move[1]*i) >= 0:
-                        valid_squares.append([self.x, self.y + (move[1]*i)])
-                elif move[1] == 0:
-                    if self.x + (move[0]*i) < 8 and self.x + (move[0]*i) >= 0:
-                        valid_squares.append([self.x+(move[0]*i), self.y])
+            for i in range(1,8):
+                row = self.x + (move[0]*i)
+                col = self.y + (move[1]*i)
+                if row >= 0 and row < 8 and col < 8 and col >= 0:
+                    if board.config[row][col] != '':
+                        if board.config[row][col][0] != self.color:
+                            valid_squares.append([row, col])
+                        break
+                    else:
+                        valid_squares.append([row, col])
         return valid_squares
 
