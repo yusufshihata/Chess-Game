@@ -8,6 +8,16 @@ class Main:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.config = [
+            ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+            ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+            ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']
+            ]
         self.dragger = Dragger()
         self.dragged_square = None
         pygame.display.set_caption("Chess Game")
@@ -20,9 +30,9 @@ class Main:
         while run:
             
             if self.dragged_square:
-                board = Board(self.screen, self.dragged_square)
+                board = Board(surface=self.screen, dragged_square=self.dragged_square, config=self.config)
             else:
-                board = Board(self.screen)
+                board = Board(surface=self.screen,config=self.config)
             
             for event in pygame.event.get():
                 
@@ -34,15 +44,20 @@ class Main:
                         dragger.drag_piece()
                         
                         
-                
                 if event.type == pygame.MOUSEBUTTONUP:
+                    if dragger.piece != None and dragger.dragging:
+                        if [dragger.mouseY//SIZE,dragger.mouseX//SIZE] in dragger.valid_moves:
+                            self.config[dragger.init_y//SIZE][dragger.init_x//SIZE] = ''
+                            self.config[dragger.mouseY//SIZE][dragger.mouseX//SIZE] = f'{dragger.piece.color}{dragger.piece.notation}'
                     dragger.dragging = False
                     dragger.piece = None
                     self.dragged_square = None
                     self.valid_moves = []
 
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     dragger.dragging = True
+                    dragger.save_initial(event.pos)
                     dragger.update_pos(event.pos)
 
                     if board.squares[dragger.mouseY//SIZE][dragger.mouseX//SIZE].occupyed():
@@ -51,14 +66,14 @@ class Main:
                         self.dragged_square = board.find_square(dragger.mouseY//SIZE, dragger.mouseX//SIZE)
 
                         dragger.valid_moves = dragger.piece.movement()
-                        print(dragger.valid_moves)
+                        piece = dragger.piece
 
                 if event.type == pygame.QUIT:
                     run = False
 
             if dragger.piece != None:
                 dragger.blit_piece(self.screen)
-                board.show_valid_moves(dragger.valid_moves, self.screen)
+                board.show_valid_moves(valid_moves=dragger.valid_moves, surface=self.screen, dragged_piece=piece)
 
             pygame.display.update()
         

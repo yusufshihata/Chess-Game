@@ -3,11 +3,12 @@ import os
 from Constants import *
 
 class Piece:
-    def __init__(self, x, y, color, name=''):
+    def __init__(self, x, y, color, name='', notation=''):
         self.name = name
         self.x = x
         self.y = y
         self.color = color
+        self.notation = notation
         self.texture = self.get_texture()
         self.texture_rect = self.get_texture_rect()
     
@@ -19,4 +20,3 @@ class Piece:
         col, row = (self.y, self.x)
         imgcenter = col*SIZE+SIZE//2,row*SIZE+SIZE//2
         return self.texture.get_rect(center=imgcenter)
-    

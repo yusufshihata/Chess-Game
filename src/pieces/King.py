@@ -1,7 +1,7 @@
 import piece as piece
 class King(piece.Piece):
     def __init__(self,x,y,color):
-        super().__init__(x=x, y=y, name='king', color=color)
+        super().__init__(x=x, y=y, name='king', notation='K', color=color)
         self.texture = super().get_texture()
         self.move_sequence = [[1,1],[1,-1],[-1,1],[-1,-1],[1,0], [0,1], [-1, 0], [0,-1]]
     

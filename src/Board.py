@@ -10,17 +10,8 @@ import pygame
 
 
 class Board:
-    def __init__(self, surface, dragged_square=None):
-        self.config = [
-            ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
-            ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', ''],
-            ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-            ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']
-            ]
+    def __init__(self, surface, config,dragged_square=None):
+        self.config = config
         self.squares = [[None for _ in range(8)] for _ in range(8)]
         self.turn = 'white'
         self.surface = surface
@@ -62,10 +53,11 @@ class Board:
     def find_square(self,x,y):
         return self.squares[y][x]
 
-    def show_valid_moves(self, valid_moves,surface):
+    def show_valid_moves(self, valid_moves, dragged_piece,surface):
         for i, valid_square in enumerate(valid_moves):
             square = self.find_square(valid_square[1], valid_square[0])
             if square.piece != None:
-                valid_moves.pop(i)
+                if square.piece.color == dragged_piece.color:
+                    valid_moves.pop(i)
             else:
                 pygame.draw.circle(surface, (100,100,100), (valid_square[1]*SIZE+SIZE//2, valid_square[0]*SIZE+SIZE//2), 20)
