@@ -10,10 +10,10 @@ import pygame
 
 
 class Board:
-    def __init__(self, surface, config,dragged_square=None):
+    def __init__(self, surface, config, turn,dragged_square=None):
         self.config = config
         self.squares = [[None for _ in range(8)] for _ in range(8)]
-        self.turn = 'white'
+        self.turn = turn
         self.surface = surface
         self.dragged_square = dragged_square
         self.configure()

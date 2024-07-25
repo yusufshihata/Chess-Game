@@ -20,6 +20,7 @@ class Main:
             ]
         self.dragger = Dragger()
         self.dragged_square = None
+        self.turn = 'w'
         pygame.display.set_caption("Chess Game")
     
     def mainLoop(self):
@@ -30,9 +31,9 @@ class Main:
         while run:
             
             if self.dragged_square:
-                board = Board(surface=self.screen, dragged_square=self.dragged_square, config=self.config)
+                board = Board(surface=self.screen, dragged_square=self.dragged_square, config=self.config, turn=self.turn)
             else:
-                board = Board(surface=self.screen,config=self.config)
+                board = Board(surface=self.screen,config=self.config, turn=self.turn)
             
             for event in pygame.event.get():
                 
@@ -49,6 +50,7 @@ class Main:
                         if [dragger.mouseY//SIZE,dragger.mouseX//SIZE] in dragger.valid_moves:
                             self.config[dragger.init_y//SIZE][dragger.init_x//SIZE] = ''
                             self.config[dragger.mouseY//SIZE][dragger.mouseX//SIZE] = f'{dragger.piece.color}{dragger.piece.notation}'
+                            self.turn = 'b' if self.turn == 'w' else 'w'
                     dragger.dragging = False
                     dragger.piece = None
                     self.dragged_square = None
@@ -61,12 +63,13 @@ class Main:
                     dragger.update_pos(event.pos)
 
                     if board.squares[dragger.mouseY//SIZE][dragger.mouseX//SIZE].occupyed():
-                        dragger.piece = board.squares[dragger.mouseY//SIZE][dragger.mouseX//SIZE].piece
+                        if board.squares[dragger.mouseY//SIZE][dragger.mouseX//SIZE].piece.color == self.turn:
+                            dragger.piece = board.squares[dragger.mouseY//SIZE][dragger.mouseX//SIZE].piece
 
-                        self.dragged_square = board.find_square(dragger.mouseY//SIZE, dragger.mouseX//SIZE)
+                            self.dragged_square = board.find_square(dragger.mouseY//SIZE, dragger.mouseX//SIZE)
 
-                        dragger.valid_moves = dragger.piece.movement(board)
-                        piece = dragger.piece
+                            dragger.valid_moves = dragger.piece.movement(board)
+                            piece = dragger.piece
 
                 if event.type == pygame.QUIT:
                     run = False
