@@ -33,10 +33,14 @@ class Pawn(piece.Piece):
                 for i in range(1,3):
                     if board.config[self.x-i][self.y] == '':
                         valid_squares.append([self.x-i, self.y])
+                    else:
+                        break
             else:
                 for i in range(1,3):
                     if board.config[self.x+i][self.y] == '':
                         valid_squares.append([self.x+i, self.y])
+                    else:
+                        break
         return valid_squares
     
     def moved(self):
