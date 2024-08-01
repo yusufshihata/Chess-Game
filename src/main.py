@@ -31,9 +31,13 @@ class Main:
         while run:
             
             if self.dragged_square:
-                board = Board(surface=self.screen, dragged_square=self.dragged_square, config=self.config, turn=self.turn)
+                board = Board(dragged_square=self.dragged_square, config=self.config, turn=self.turn)
+                board.configure(self.screen)
+                board.show_pieces(self.screen)
             else:
-                board = Board(surface=self.screen,config=self.config, turn=self.turn)
+                board = Board(config=self.config, turn=self.turn)
+                board.configure(self.screen)
+                board.show_pieces(self.screen)
             
             for event in pygame.event.get():
                 
